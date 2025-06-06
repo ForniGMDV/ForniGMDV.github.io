@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Portfolio - Alejo Forni</title>
     <style>
-        /* COLORES PRINCIPALES ACTUALIZADOS - FONDO NEGRO OSCURO */
+        /* COLORES PRINCIPALES */
         :root {
             --primary-pink: #ff69b4;
             --primary-pink-dark: #ff1493;
             --primary-pink-darker: #c71585;
-            
-            /* NUEVOS FONDOS NEGROS OSCUROS */
             --bg-primary: #0a0a0a;
             --bg-secondary: #0d0d0d;
             --bg-tertiary: #111111;
             --bg-dark: #050505;
-            
             --text-primary: #e0e0e0;
             --text-secondary: #b0b0b0;
         }
@@ -36,7 +33,7 @@
             overflow-x: hidden;
         }
 
-        /* SISTEMA DE CURSOR PERSONALIZADO ACTUALIZADO */
+        /* CURSOR PERSONALIZADO OPTIMIZADO */
         body.custom-cursor,
         body.custom-cursor *,
         body.custom-cursor *:before,
@@ -44,7 +41,6 @@
             cursor: none !important;
         }
 
-        /* CURSOR PERSONALIZADO ROSA */
         .cursor {
             position: fixed;
             width: 16px;
@@ -52,14 +48,16 @@
             background: radial-gradient(circle, #ff69b4 0%, #ff1493 70%, #c71585 100%);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
+            z-index: 10001; /* OPTIMIZADO: Mayor que modales */
+            transform: translate3d(-50%, -50%, 0); /* GPU acelerado */
             box-shadow: 
                 0 0 20px rgba(255, 105, 180, 0.8),
                 0 0 40px rgba(255, 105, 180, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.2);
             opacity: 0;
+            will-change: transform;
+            backface-visibility: hidden;
         }
 
         body.custom-cursor .cursor {
@@ -73,9 +71,12 @@
             background: rgba(255, 105, 180, 0.6);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 9998;
+            z-index: 10000; /* OPTIMIZADO: Mayor que modales */
+            transform: translate3d(-50%, -50%, 0); /* GPU acelerado */
             transition: none;
             opacity: 0;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
         }
 
         body.custom-cursor .cursor-trail {
@@ -101,15 +102,17 @@
             transition: all 0.3s ease;
             z-index: 1001;
             backdrop-filter: blur(10px);
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         .cursor-toggle:hover {
             background: rgba(17, 17, 17, 0.9);
-            transform: scale(1.1);
+            transform: scale(1.1) translateZ(0);
             box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
         }
 
-        /* PARALLAX BACKGROUND */
+        /* PARALLAX BACKGROUND OPTIMIZADO */
         .parallax-bg {
             position: fixed;
             top: 0;
@@ -120,9 +123,12 @@
             background-size: 150px 150px;
             z-index: -1;
             will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            contain: layout style paint;
         }
 
-        /* SECCIÓN PRINCIPAL CENTRALIZADA */
+        /* SECCIÓN PRINCIPAL */
         .main-section {
             height: 100vh;
             display: flex;
@@ -134,6 +140,7 @@
             position: relative;
             overflow: hidden;
             background: linear-gradient(135deg, #0a0a0a 0%, #0d0d0d 30%, #050505 100%);
+            contain: layout style;
         }
 
         .main-section::before {
@@ -157,6 +164,7 @@
             z-index: 10;
             max-width: 800px;
             padding: 0 20px;
+            contain: layout style;
         }
 
         .hero-content h1 {
@@ -176,6 +184,7 @@
             font-weight: bold;
             text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
             font-family: 'Courier New', monospace;
+            contain: layout;
         }
 
         .typewriter {
@@ -186,6 +195,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            contain: layout;
         }
 
         .typewriter-text {
@@ -204,7 +214,7 @@
             51%, 100% { opacity: 0; }
         }
 
-        /* BOTONES DE NAVEGACIÓN PRINCIPAL */
+        /* BOTONES DE NAVEGACIÓN OPTIMIZADOS */
         .nav-buttons {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -212,6 +222,7 @@
             width: 100%;
             max-width: 800px;
             margin-top: 2rem;
+            contain: layout style;
         }
 
         .nav-btn {
@@ -224,13 +235,16 @@
             border-radius: 20px;
             color: var(--text-primary);
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             backdrop-filter: blur(10px);
             cursor: pointer;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         .nav-btn:hover {
-            transform: translateY(-5px);
+            transform: translate3d(0, -5px, 0);
             border-color: #ff69b4;
             background: rgba(17, 17, 17, 0.9);
             box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
@@ -258,7 +272,7 @@
             text-align: center;
         }
 
-        /* MODALES */
+        /* MODALES OPTIMIZADOS */
         .modal {
             display: none;
             position: fixed;
@@ -269,6 +283,9 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(5px);
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            contain: layout style paint;
         }
 
         .modal.show {
@@ -292,10 +309,14 @@
             max-width: 1200px;
             max-height: 90vh;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             position: relative;
             border: 2px solid rgba(255, 105, 180, 0.3);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             animation: modalSlideIn 0.3s ease;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         @keyframes modalSlideIn {
@@ -332,9 +353,7 @@
             background-clip: text;
         }
 
-        /* ESTILOS ESPECÍFICOS PARA CADA MODAL */
-        
-        /* PROYECTOS MODAL */
+        /* ESTADÍSTICAS OPTIMIZADAS */
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -350,10 +369,13 @@
             color: white;
             transition: transform 0.3s ease;
             box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         .stat-item:hover {
-            transform: scale(1.03);
+            transform: translate3d(0, 0, 0) scale(1.03);
         }
 
         .stat-number {
@@ -367,6 +389,7 @@
             opacity: 0.9;
         }
 
+        /* PROYECTOS OPTIMIZADOS */
         .projects {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -379,13 +402,16 @@
             padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
-            transition: all 0.4s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
             border: 1px solid rgba(255, 105, 180, 0.2);
             backdrop-filter: blur(10px);
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         .project-card:hover {
-            transform: translateY(-8px);
+            transform: translate3d(0, -8px, 0);
             box-shadow: 0 15px 40px rgba(255, 105, 180, 0.2);
             border-color: rgba(255, 105, 180, 0.5);
             background: rgba(17, 17, 17, 0.9);
@@ -419,7 +445,7 @@
             font-weight: bold;
         }
 
-        /* HABILIDADES MODAL */
+        /* HABILIDADES OPTIMIZADAS */
         .skills {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -476,7 +502,7 @@
             100% { transform: translateX(100%); }
         }
 
-        /* CONTACTO MODAL */
+        /* CONTACTO OPTIMIZADO */
         .contact-content {
             text-align: center;
             padding: 2rem 0;
@@ -505,13 +531,16 @@
             color: white;
             text-decoration: none;
             border-radius: 15px;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             font-size: 1.1rem;
             font-weight: bold;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         .social-btn:hover {
-            transform: translateY(-5px);
+            transform: translate3d(0, -5px, 0);
             box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
         }
 
@@ -519,13 +548,15 @@
             font-size: 2rem;
         }
 
-        /* FLOATING ELEMENTS */
+        /* FLOATING ELEMENTS OPTIMIZADOS */
         .floating-shapes {
             position: absolute;
             width: 100%;
             height: 100%;
             overflow: hidden;
             z-index: -1;
+            will-change: auto;
+            transform: translateZ(0);
         }
 
         .shape {
@@ -533,7 +564,9 @@
             background: rgba(255, 105, 180, 0.1);
             border-radius: 50%;
             animation: float 8s ease-in-out infinite;
-            will-change: transform;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            transform: translateZ(0);
         }
 
         .shape:nth-child(1) {
@@ -562,11 +595,11 @@
 
         @keyframes float {
             0%, 100% { 
-                transform: translateY(0px) rotate(0deg); 
+                transform: translate3d(0, 0px, 0) rotate(0deg); 
                 opacity: 0.3;
             }
             50% { 
-                transform: translateY(-15px) rotate(180deg); 
+                transform: translate3d(0, -15px, 0) rotate(180deg); 
                 opacity: 0.6;
             }
         }
@@ -582,8 +615,28 @@
             }
         }
 
-        /* RESPONSIVE */
+        /* SCROLLBAR OPTIMIZADA */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(17, 17, 17, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #ff69b4, #da70d6);
+            border-radius: 4px;
+        }
+
+        /* RESPONSIVE OPTIMIZADO */
         @media (max-width: 768px) {
+            /* Deshabilitar optimizaciones en móviles para ahorrar batería */
+            *, *:before, *:after {
+                will-change: auto !important;
+                animation: none !important;
+            }
+            
             .hero-content h1 {
                 font-size: 2rem;
             }
@@ -624,7 +677,7 @@
 
             .cursor,
             .cursor-trail {
-                display: none;
+                display: none !important;
             }
 
             .cursor-toggle {
@@ -636,6 +689,14 @@
             body.custom-cursor *:before,
             body.custom-cursor *:after {
                 cursor: auto !important;
+            }
+
+            .parallax-bg {
+                background: none;
+            }
+            
+            .floating-shapes {
+                display: none;
             }
         }
     </style>
@@ -861,19 +922,78 @@
     </div>
 
     <script>
-        // VARIABLES GLOBALES OPTIMIZADAS
+        // ==================== VARIABLES GLOBALES OPTIMIZADAS ====================
         const body = document.body;
         let mouseX = 0, mouseY = 0;
+        let lastMouseX = 0, lastMouseY = 0;
         let cursorTrails = [];
         let isCustomCursor = true;
         let animationId = null;
+        let cursorNeedsUpdate = false;
         let clickScale = 1;
         let isInitialized = false;
+        const CURSOR_THRESHOLD = 1; // Píxeles mínimos para actualizar cursor
 
-        // FECHA DE NACIMIENTO - 27 de Mayo 2004 a las 18:00
+        // Fecha de nacimiento - 27 de Mayo 2004 a las 18:00
         const birthDate = new Date('2004-05-27T18:00:00');
 
-        // SISTEMA DE CURSOR PERSONALIZADO CON VALIDACIONES
+        // ==================== CLASE OPTIMIZADA DE CONTADOR DE EDAD ====================
+        class AgeCounter {
+            constructor(birthDate, elementId) {
+                this.birthDate = new Date(birthDate);
+                this.element = document.getElementById(elementId);
+                this.lastAge = null;
+                this.intervalId = null;
+                this.isVisible = true;
+            }
+
+            calculateAge() {
+                const now = new Date();
+                const diffMs = now.getTime() - this.birthDate.getTime();
+                const ageInYears = diffMs / (1000 * 60 * 60 * 24 * 365.25);
+                return ageInYears;
+            }
+
+            formatAge(age) {
+                return age.toFixed(9);
+            }
+
+            update() {
+                if (!this.element || !this.isVisible) return;
+                
+                const currentAge = this.calculateAge();
+                const formattedAge = this.formatAge(currentAge);
+                
+                // Solo actualizar DOM si el valor cambió
+                if (formattedAge !== this.lastAge) {
+                    this.element.textContent = formattedAge;
+                    this.lastAge = formattedAge;
+                }
+            }
+
+            start() {
+                const interval = this.isVisible ? 50 : 1000;
+                this.update();
+                this.intervalId = setInterval(() => this.update(), interval);
+            }
+
+            stop() {
+                if (this.intervalId) {
+                    clearInterval(this.intervalId);
+                    this.intervalId = null;
+                }
+            }
+
+            setVisibility(visible) {
+                this.isVisible = visible;
+                if (this.intervalId) {
+                    this.stop();
+                    this.start();
+                }
+            }
+        }
+
+        // ==================== SISTEMA DE CURSOR OPTIMIZADO ====================
         function initCursor() {
             try {
                 // Limpiar cursores existentes
@@ -890,66 +1010,32 @@
                     return;
                 }
 
-                // Crear elementos del trail
+                // Crear elementos del trail optimizados
                 for (let i = 0; i < 12; i++) {
                     const trail = document.createElement("div");
                     const isMainCursor = i === 0;
                     
                     if (isMainCursor) {
-                        // Cursor principal
                         trail.className = "cursor";
-                        trail.style.cssText = `
-                            position: fixed;
-                            width: 16px;
-                            height: 16px;
-                            background: radial-gradient(circle, #ff69b4 0%, #ff1493 70%, #c71585 100%);
-                            border-radius: 50%;
-                            pointer-events: none;
-                            z-index: 9999;
-                            transform: translate(-50%, -50%);
-                            box-shadow: 
-                                0 0 20px rgba(255, 105, 180, 0.8),
-                                0 0 40px rgba(255, 105, 180, 0.4),
-                                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-                            border: 1px solid rgba(255, 255, 255, 0.2);
-                            opacity: ${isCustomCursor ? '1' : '0'};
-                            left: 50%;
-                            top: 50%;
-                        `;
                     } else {
-                        // Elementos del trail
                         trail.className = "cursor-trail";
-                        trail.style.cssText = `
-                            position: fixed;
-                            width: 8px;
-                            height: 8px;
-                            background: rgba(255, 105, 180, 0.6);
-                            border-radius: 50%;
-                            pointer-events: none;
-                            z-index: 9998;
-                            transform: translate(-50%, -50%);
-                            transition: none;
-                            opacity: ${isCustomCursor ? '1' : '0'};
-                            left: 50%;
-                            top: 50%;
-                        `;
                     }
+                    
+                    // Posición inicial centrada
+                    trail.style.left = '50%';
+                    trail.style.top = '50%';
                     
                     document.body.appendChild(trail);
                     cursorTrails.push({
                         element: trail,
                         x: window.innerWidth / 2,
                         y: window.innerHeight / 2,
-                        targetX: window.innerWidth / 2,
-                        targetY: window.innerHeight / 2,
                         isMain: isMainCursor
                     });
                 }
                 
-                // Asegurar que el body tenga la clase custom-cursor
                 if (isCustomCursor) {
                     body.classList.add('custom-cursor');
-                    // Iniciar animación
                     if (!animationId) {
                         updateCursor();
                     }
@@ -958,137 +1044,77 @@
                 console.log('✅ Cursor personalizado inicializado correctamente');
             } catch (error) {
                 console.error('❌ Error inicializando cursor:', error);
-                // Fallback: deshabilitar cursor personalizado
                 isCustomCursor = false;
                 body.classList.remove('custom-cursor');
             }
         }
 
-        // Movimiento del cursor MEJORADO Y SEGURO
+        // Función optimizada de actualización del cursor
         function updateCursor() {
-            try {
-                if (!isCustomCursor || cursorTrails.length === 0) {
-                    animationId = null;
-                    return;
-                }
+            if (!isCustomCursor || cursorTrails.length === 0) {
+                animationId = requestAnimationFrame(updateCursor);
+                return;
+            }
 
-                cursorTrails.forEach((trail, index) => {
-                    if (!trail.element || !trail.element.parentNode) {
-                        return; // Skip elementos que ya no existen
-                    }
+            let hasMovement = false;
+            
+            cursorTrails.forEach((trail, index) => {
+                if (!trail.element || !trail.element.parentNode) return;
 
-                    if (index === 0) {
-                        // El cursor principal sigue al mouse
-                        trail.targetX = mouseX;
-                        trail.targetY = mouseY;
+                if (index === 0) {
+                    // Solo actualizar si hay movimiento significativo
+                    const deltaX = Math.abs(mouseX - trail.x);
+                    const deltaY = Math.abs(mouseY - trail.y);
+                    
+                    if (deltaX > CURSOR_THRESHOLD || deltaY > CURSOR_THRESHOLD || cursorNeedsUpdate) {
                         trail.x = mouseX;
                         trail.y = mouseY;
-                    } else {
-                        // Los trails siguen al elemento anterior
-                        const prevTrail = cursorTrails[index - 1];
-                        if (prevTrail) {
-                            trail.targetX = prevTrail.x;
-                            trail.targetY = prevTrail.y;
-                            
-                            const ease = 0.15 - (index * 0.005);
-                            trail.x += (trail.targetX - trail.x) * ease;
-                            trail.y += (trail.targetY - trail.y) * ease;
+                        hasMovement = true;
+                    }
+                } else {
+                    const prevTrail = cursorTrails[index - 1];
+                    if (prevTrail) {
+                        const ease = 0.15 - (index * 0.005);
+                        const newX = trail.x + (prevTrail.x - trail.x) * ease;
+                        const newY = trail.y + (prevTrail.y - trail.y) * ease;
+                        
+                        // Solo actualizar si hay cambio significativo
+                        if (Math.abs(newX - trail.x) > 0.1 || Math.abs(newY - trail.y) > 0.1) {
+                            trail.x = newX;
+                            trail.y = newY;
+                            hasMovement = true;
                         }
                     }
-
-                    // Aplicar posición de forma segura
-                    if (trail.element && trail.element.style) {
-                        trail.element.style.left = trail.x + "px";
-                        trail.element.style.top = trail.y + "px";
-
-                        // Efectos solo para trails
-                        if (!trail.isMain) {
-                            const scale = Math.max(0.2, 1 - index * 0.08);
-                            const opacity = Math.max(0.05, 0.7 - index * 0.06);
-                            
-                            trail.element.style.transform = `translate(-50%, -50%) scale(${scale})`;
-                            trail.element.style.opacity = opacity;
-                            
-                            const hue = 330 + (index * 3);
-                            const saturation = Math.max(50, 100 - index * 5);
-                            trail.element.style.background = `hsla(${hue}, ${saturation}%, 70%, ${opacity})`;
-                        }
-                    }
-                });
-
-                animationId = requestAnimationFrame(updateCursor);
-            } catch (error) {
-                console.error('❌ Error en updateCursor:', error);
-                animationId = null;
-            }
-        }
-
-        // CONTADOR DE EDAD SEGURO Y PRECISO
-        function updateAgeCounter() {
-            try {
-                const ageElement = document.getElementById('ageCounter');
-                if (ageElement) {
-                    const now = new Date();
-                    
-                    // Cálculo más preciso de la edad
-                    let years = now.getFullYear() - birthDate.getFullYear();
-                    let months = now.getMonth() - birthDate.getMonth();
-                    let days = now.getDate() - birthDate.getDate();
-                    let hours = now.getHours() - birthDate.getHours();
-                    let minutes = now.getMinutes() - birthDate.getMinutes();
-                    let seconds = now.getSeconds() - birthDate.getSeconds();
-                    let milliseconds = now.getMilliseconds() - birthDate.getMilliseconds();
-                    
-                    // Ajustar si los valores son negativos
-                    if (milliseconds < 0) {
-                        seconds--;
-                        milliseconds += 1000;
-                    }
-                    if (seconds < 0) {
-                        minutes--;
-                        seconds += 60;
-                    }
-                    if (minutes < 0) {
-                        hours--;
-                        minutes += 60;
-                    }
-                    if (hours < 0) {
-                        days--;
-                        hours += 24;
-                    }
-                    if (days < 0) {
-                        months--;
-                        const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-                        days += lastMonth.getDate();
-                    }
-                    if (months < 0) {
-                        years--;
-                        months += 12;
-                    }
-                    
-                    // Convertir todo a años decimales
-                    const totalDaysInYear = 365.25;
-                    const totalHoursInYear = totalDaysInYear * 24;
-                    const totalMinutesInYear = totalHoursInYear * 60;
-                    const totalSecondsInYear = totalMinutesInYear * 60;
-                    const totalMillisecondsInYear = totalSecondsInYear * 1000;
-                    
-                    const ageInYears = years + 
-                        (months / 12) + 
-                        (days / totalDaysInYear) + 
-                        (hours / totalHoursInYear) + 
-                        (minutes / totalMinutesInYear) + 
-                        (seconds / totalSecondsInYear) + 
-                        (milliseconds / totalMillisecondsInYear);
-                    
-                    ageElement.textContent = ageInYears.toFixed(9);
                 }
-            } catch (error) {
-                console.error('❌ Error actualizando contador de edad:', error);
+
+                // Batch DOM updates usando transform3d para GPU
+                if (hasMovement && trail.element.style) {
+                    trail.element.style.left = trail.x + "px";
+                    trail.element.style.top = trail.y + "px";
+                    
+                    if (!trail.isMain) {
+                        const scale = Math.max(0.2, 1 - index * 0.08);
+                        const opacity = Math.max(0.05, 0.7 - index * 0.06);
+                        
+                        trail.element.style.opacity = opacity;
+                        trail.element.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                        
+                        const hue = 330 + (index * 3);
+                        const saturation = Math.max(50, 100 - index * 5);
+                        trail.element.style.background = `hsla(${hue}, ${saturation}%, 70%, ${opacity})`;
+                    }
+                }
+            });
+
+            // Marcar como no necesita actualización si no hay movimiento
+            if (!hasMovement) {
+                cursorNeedsUpdate = false;
             }
+
+            animationId = requestAnimationFrame(updateCursor);
         }
 
-        // TYPEWRITER EFFECT SEGURO
+        // ==================== TYPEWRITER OPTIMIZADO ====================
         function initTypewriter() {
             try {
                 const typewriterText = document.getElementById("typewriterText");
@@ -1109,10 +1135,11 @@
                 let textIndex = 0;
                 let charIndex = 0;
                 let isDeleting = false;
+                let isActive = true;
 
                 function typeWriter() {
                     try {
-                        if (!typewriterText) return;
+                        if (!typewriterText || !isActive) return;
                         
                         const currentText = texts[textIndex];
 
@@ -1141,6 +1168,12 @@
                     }
                 }
 
+                // Intersection Observer para pausar cuando no es visible
+                const visibilityObserver = new IntersectionObserver((entries) => {
+                    isActive = entries[0].isIntersecting;
+                }, { threshold: 0.1 });
+                
+                visibilityObserver.observe(typewriterText);
                 typeWriter();
                 console.log('✅ Typewriter inicializado correctamente');
             } catch (error) {
@@ -1148,7 +1181,7 @@
             }
         }
 
-        // CONTADOR DE ESTADÍSTICAS SEGURO
+        // ==================== CONTADOR DE ESTADÍSTICAS OPTIMIZADO ====================
         function initStatsCounter() {
             try {
                 function animateCounters() {
@@ -1183,14 +1216,13 @@
                     }
                 }
 
-                // Animar inmediatamente cuando se abra el modal de proyectos
                 window.animateStatsCounters = animateCounters;
             } catch (error) {
                 console.error('❌ Error inicializando stats counter:', error);
             }
         }
 
-        // ANIMACIÓN DE BARRAS DE HABILIDADES
+        // ==================== ANIMACIÓN DE BARRAS DE HABILIDADES ====================
         function animateSkillBars() {
             try {
                 const progressBars = document.querySelectorAll(".skill-progress");
@@ -1207,7 +1239,7 @@
             }
         }
 
-        // FUNCIONES DE MODAL
+        // ==================== FUNCIONES DE MODAL ====================
         function openModal(modalId) {
             try {
                 const modal = document.getElementById(modalId);
@@ -1243,7 +1275,7 @@
             }
         }
 
-        // DETECCIÓN MÓVIL MEJORADA
+        // ==================== DETECCIÓN MÓVIL ====================
         function handleMobileDetection() {
             try {
                 if (window.innerWidth <= 768) {
@@ -1273,19 +1305,29 @@
             }
         }
 
-        // EVENT LISTENERS SEGUROS
+        // ==================== EVENT LISTENERS OPTIMIZADOS ====================
         function initEventListeners() {
             try {
                 console.log('🔧 Inicializando event listeners...');
 
-                // Mouse events
+                // Mouse events optimizados con throttling
                 document.addEventListener("mousemove", (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                    if (isCustomCursor && !animationId) {
-                        updateCursor();
+                    const deltaX = Math.abs(e.clientX - lastMouseX);
+                    const deltaY = Math.abs(e.clientY - lastMouseY);
+                    
+                    // Solo actualizar si hay movimiento significativo
+                    if (deltaX > CURSOR_THRESHOLD || deltaY > CURSOR_THRESHOLD) {
+                        mouseX = e.clientX;
+                        mouseY = e.clientY;
+                        lastMouseX = mouseX;
+                        lastMouseY = mouseY;
+                        cursorNeedsUpdate = true;
+                        
+                        if (isCustomCursor && !animationId) {
+                            updateCursor();
+                        }
                     }
-                });
+                }, { passive: true });
 
                 document.addEventListener("mousedown", () => {
                     if (isCustomCursor && cursorTrails.length > 0 && cursorTrails[0].element) {
@@ -1305,7 +1347,7 @@
                     }
                 });
 
-                // Cursor toggle
+                // Cursor toggle optimizado
                 const cursorToggle = document.getElementById("cursorToggle");
                 if (cursorToggle) {
                     cursorToggle.addEventListener("click", (e) => {
@@ -1358,7 +1400,7 @@
                     }
                 });
 
-                // Hover effects para elementos interactivos
+                // Hover effects optimizados para elementos interactivos
                 setTimeout(() => {
                     const interactiveElements = document.querySelectorAll(
                         ".nav-btn, .social-btn, .cursor-toggle, .close"
@@ -1389,7 +1431,7 @@
             }
         }
 
-        // Debounce utility
+        // ==================== UTILIDADES ====================
         function debounce(func, wait) {
             let timeout;
             return function executedFunction(...args) {
@@ -1402,7 +1444,7 @@
             };
         }
 
-        // INICIALIZACIÓN PRINCIPAL SEGURA
+        // ==================== INICIALIZACIÓN PRINCIPAL ====================
         document.addEventListener("DOMContentLoaded", () => {
             try {
                 console.log('🚀 DOM Cargado - Iniciando portfolio...');
@@ -1413,12 +1455,11 @@
             }
         });
 
-        // INICIALIZACIÓN FINAL DESPUÉS DE LOAD
+        // Inicialización completa después de load
         window.addEventListener("load", () => {
             try {
                 console.log('🔄 Iniciando carga final...');
                 
-                // Función para completar la inicialización
                 const completeInitialization = () => {
                     try {
                         console.log('⚡ Ejecutando inicialización completa...');
@@ -1429,9 +1470,21 @@
                         initEventListeners();
                         initStatsCounter();
                         
-                        // Iniciar contador de edad
-                        updateAgeCounter();
-                        setInterval(updateAgeCounter, 50);
+                        // Inicializar contador de edad optimizado
+                        const ageCounter = new AgeCounter('2004-05-27T18:00:00', 'ageCounter');
+                        
+                        // Intersection Observer para el contador de edad
+                        const ageObserver = new IntersectionObserver((entries) => {
+                            entries.forEach(entry => {
+                                ageCounter.setVisibility(entry.isIntersecting);
+                            });
+                        }, { threshold: 0.1, rootMargin: '0px' });
+
+                        const ageElement = document.getElementById('ageCounter');
+                        if (ageElement) {
+                            ageObserver.observe(ageElement.parentElement);
+                            ageCounter.start();
+                        }
                         
                         console.log('✅ Portfolio completamente inicializado');
                     } catch (error) {
@@ -1439,7 +1492,6 @@
                     }
                 };
                 
-                // Inicializar directamente
                 completeInitialization();
                 
             } catch (error) {
@@ -1447,7 +1499,7 @@
             }
         });
 
-        // CLEANUP SEGURO
+        // ==================== CLEANUP Y RESIZE ====================
         window.addEventListener("beforeunload", () => {
             try {
                 if (animationId) {
@@ -1463,7 +1515,7 @@
             }
         });
 
-        // RESIZE HANDLER
+        // Resize handler optimizado
         window.addEventListener('resize', debounce(() => {
             try {
                 handleMobileDetection();
