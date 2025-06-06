@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST Firebase - Alejo Forni</title>
+    <style>
+        body {
+            background: #0a0a0a;
+            color: #ff69b4;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .test-item {
+            background: rgba(255, 105, 180, 0.1);
+            border: 1px solid #ff69b4;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .loading-test {
+            background: rgba(17, 17, 17, 0.9);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 105, 180, 0.3);
+            border-top: 3px solid #ff69b4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .success { color: #00ff00; }
+        .error { color: #ff0000; }
+        .warning { color: #ffaa00; }
+    </style>
+</head>
+<body>
+    <!-- LOADING SCREEN DE PRUEBA -->
+    <div class="loading-test" id="loadingTest">
+        <div>
+            <div class="loader"></div>
+            <div style="margin-top: 20px; color: #ff69b4;">
+                Probando carga de Firebase...
+            </div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h1>🔥 TEST DE FIREBASE HOSTING</h1>
+        
+        <div class="test-item">
+            <h3>📄 HTML cargado:</h3>
+            <div id="htmlStatus" class="success">✅ HTML funcionando</div>
+        </div>
+
+        <div class="test-item">
+            <h3>🎨 CSS cargado:</h3>
+            <div id="cssStatus">Verificando...</div>
+        </div>
+
+        <div class="test-item">
+            <h3>⚡ JavaScript cargado:</h3>
+            <div id="jsStatus">Verificando...</div>
+        </div>
+
+        <div class="test-item">
+            <h3>🌐 URL actual:</h3>
+            <div id="urlInfo"></div>
+        </div>
+
+        <div class="test-item">
+            <h3>📱 Información del dispositivo:</h3>
+            <div id="deviceInfo"></div>
+        </div>
+
+        <div class="test-item">
+            <h3>🔍 Errores detectados:</h3>
+            <div id="errorInfo">Ninguno</div>
+        </div>
+
+        <div class="test-item">
+            <h3>🚀 Estado de la carga:</h3>
+            <div id="loadStatus">Cargando...</div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🔥 FIREBASE TEST - JavaScript iniciado');
+        
+        let errores = [];
+        
+        // Capturar errores
+        window.onerror = function(msg, url, line, col, error) {
+            errores.push(`Error: ${msg} en línea ${line}`);
+            document.getElementById('errorInfo').innerHTML = errores.join('<br>');
+            document.getElementById('errorInfo').className = 'error';
+            console.error('❌ Error capturado:', msg, url, line);
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📋 DOM Cargado');
+            
+            // Verificar CSS
+            const cssTest = window.getComputedStyle(document.body).backgroundColor;
+            if (cssTest.includes('10, 10, 10') || cssTest === 'rgb(10, 10, 10)') {
+                document.getElementById('cssStatus').innerHTML = '✅ CSS funcionando';
+                document.getElementById('cssStatus').className = 'success';
+            } else {
+                document.getElementById('cssStatus').innerHTML = '❌ CSS no cargado';
+                document.getElementById('cssStatus').className = 'error';
+            }
+            
+            // JavaScript
+            document.getElementById('jsStatus').innerHTML = '✅ JavaScript funcionando';
+            document.getElementById('jsStatus').className = 'success';
+            
+            // URL info
+            document.getElementById('urlInfo').innerHTML = window.location.href;
+            
+            // Device info
+            document.getElementById('deviceInfo').innerHTML = `
+                Ancho: ${window.innerWidth}px<br>
+                Alto: ${window.innerHeight}px<br>
+                User Agent: ${navigator.userAgent.substring(0, 50)}...
+            `;
+        });
+
+        window.addEventListener('load', function() {
+            console.log('⚡ Window Load ejecutado');
+            
+            // Simular loading screen como en tu portfolio
+            setTimeout(function() {
+                const loading = document.getElementById('loadingTest');
+                if (loading) {
+                    loading.style.opacity = '0';
+                    document.getElementById('loadStatus').innerHTML = '🎯 Loading screen ocultándose...';
+                    
+                    setTimeout(function() {
+                        loading.style.display = 'none';
+                        document.getElementById('loadStatus').innerHTML = '✅ Carga completada exitosamente';
+                        document.getElementById('loadStatus').className = 'success';
+                        console.log('✅ Test completado - Firebase funcionando correctamente');
+                    }, 500);
+                }
+            }, 1000);
+        });
+
+        // Test de recursos
+        const recursos = ['css/styles.css', 'js/main.js'];
+        recursos.forEach(recurso => {
+            fetch(recurso)
+                .then(response => {
+                    if (response.ok) {
+                        console.log(`✅ Recurso encontrado: ${recurso}`);
+                    } else {
+                        console.log(`❌ Recurso no encontrado: ${recurso} (${response.status})`);
+                        errores.push(`Recurso no encontrado: ${recurso}`);
+                    }
+                })
+                .catch(error => {
+                    console.log(`💥 Error cargando ${recurso}:`, error);
+                    errores.push(`Error cargando: ${recurso}`);
+                });
+        });
+
+        console.log('🏁 Firebase Test Script completado');
+    </script>
+</body>
+</html>

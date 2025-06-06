@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portfolio - Alejo Forni</title>
+    
+    <!-- PRELOAD DE RECURSOS CRÍTICOS -->
+    <link rel="preload" href="/css/styles.css" as="style">
+    <link rel="preload" href="/js/main.js" as="script">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="custom-cursor">
+    <!-- LOADING SCREEN -->
+    <div class="loading-screen" id="loadingScreen">
+        <div>
+            <div class="loader"></div>
+            <div class="loading-text">Cargando experiencia...</div>
+        </div>
+    </div>
+
+    <!-- BOTÓN TOGGLE CURSOR -->
+    <div class="cursor-toggle" id="cursorToggle" title="Alternar cursor personalizado">
+        🖱️
+    </div>
+
+    <!-- PARALLAX BACKGROUND -->
+    <div class="parallax-bg" id="parallaxBg"></div>
+
+    <!-- SCROLL INDICATOR -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <header id="header">
+        <nav class="container">
+            <div class="logo">Alejo Forni</div>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#habilidades">Habilidades</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="hero-content">
+            <h1>¡Hola, soy Alejo Forni!</h1>
+            <div class="age-counter">
+                I'm a <span id="ageCounter">22</span> year-old developer
+            </div>
+            <div class="typewriter">
+                <span class="typewriter-text" id="typewriterText"></span>
+                <span class="typewriter-cursor" id="typewriterCursor">|</span>
+            </div>
+            <a href="#proyectos" class="btn" id="heroBtn">Ver mis proyectos</a>
+        </div>
+    </section>
+
+    <section id="proyectos" class="section">
+        <div class="container">
+            <h2 class="reveal-title">Mis Proyectos</h2>
+            
+            <!-- CONTADOR DE ESTADÍSTICAS -->
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="15">0</div>
+                    <div class="stat-label">Proyectos Completados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="3">0</div>
+                    <div class="stat-label">Años de Experiencia</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="50">0</div>
+                    <div class="stat-label">Clientes Satisfechos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="24">0</div>
+                    <div class="stat-label">Horas de Código/Día</div>
+                </div>
+            </div>
+
+            <div class="projects">
+                <div class="project-card fade-in-up" data-project="vismalaga">
+                    <h3>VisMálaga</h3>
+                    <p>Aplicación web para descubrir actividades y lugares turísticos en Málaga. Desarrollada con React, Node.js y MySQL.</p>
+                    <p><strong>Tecnologías:</strong> React, Node.js, MySQL, Firebase</p>
+                    <button class="btn project-btn">Ver detalles</button>
+                </div>
+                
+                <div class="project-card fade-in-up" data-project="portfolio">
+                    <h3>Portfolio Personal</h3>
+                    <p>Sitio web personal responsivo con diseño moderno y animaciones suaves. Hosteado en Firebase.</p>
+                    <p><strong>Tecnologías:</strong> HTML5, CSS3, JavaScript, Firebase Hosting</p>
+                    <button class="btn project-btn">Ver detalles</button>
+                </div>
+                
+                <div class="project-card fade-in-up" data-project="ecommerce">
+                    <h3>E-Commerce Platform</h3>
+                    <p>Plataforma de comercio electrónico completa con sistema de pagos, gestión de inventario y panel de administración.</p>
+                    <p><strong>Tecnologías:</strong> React, Node.js, MongoDB, Stripe</p>
+                    <button class="btn project-btn">Ver detalles</button>
+                </div>
+            </div>
+
+            <!-- SECCIONES DE DETALLES DE PROYECTOS -->
+            <div class="project-details" id="details-vismalaga">
+                <div class="project-details-content">
+                    <button class="close-details">&times;</button>
+                    <h3>VisMálaga - Detalles del Proyecto</h3>
+                    <div class="project-info">
+                        <div class="project-description">
+                            <p>Una aplicación web completa para explorar Málaga, con funcionalidades como:</p>
+                            <ul>
+                                <li>🗺️ Mapa interactivo con lugares de interés</li>
+                                <li>📱 Diseño responsive y PWA</li>
+                                <li>🔍 Sistema de búsqueda avanzado</li>
+                                <li>⭐ Sistema de reseñas y valoraciones</li>
+                                <li>🌐 Multiidioma (ES/EN)</li>
+                            </ul>
+                            <p><strong>Retos superados:</strong> Optimización de rendimiento, integración con APIs de mapas, gestión de estado complejo.</p>
+                        </div>
+                        <div class="project-tech">
+                            <h4>Tecnologías Utilizadas</h4>
+                            <div class="tech-tags">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">MySQL</span>
+                                <span class="tech-tag">Firebase</span>
+                                <span class="tech-tag">Google Maps API</span>
+                                <span class="tech-tag">PWA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-details" id="details-portfolio">
+                <div class="project-details-content">
+                    <button class="close-details">&times;</button>
+                    <h3>Portfolio Personal - Detalles</h3>
+                    <div class="project-info">
+                        <div class="project-description">
+                            <p>Mi portfolio personal con enfoque en la experiencia del usuario:</p>
+                            <ul>
+                                <li>🎨 Diseño moderno y minimalista</li>
+                                <li>⚡ Carga ultra-rápida</li>
+                                <li>📱 Completamente responsive</li>
+                                <li>🌟 Animaciones suaves</li>
+                                <li>🔥 Hosteado en Firebase</li>
+                            </ul>
+                        </div>
+                        <div class="project-tech">
+                            <h4>Tecnologías Utilizadas</h4>
+                            <div class="tech-tags">
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">CSS3</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Firebase</span>
+                                <span class="tech-tag">Performance Optimization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-details" id="details-ecommerce">
+                <div class="project-details-content">
+                    <button class="close-details">&times;</button>
+                    <h3>E-Commerce Platform - Detalles</h3>
+                    <div class="project-info">
+                        <div class="project-description">
+                            <p>Plataforma completa de comercio electrónico:</p>
+                            <ul>
+                                <li>🛒 Carrito de compras avanzado</li>
+                                <li>💳 Integración con Stripe</li>
+                                <li>📊 Panel de administración</li>
+                                <li>📦 Gestión de inventario</li>
+                                <li>📈 Analytics y reportes</li>
+                            </ul>
+                            <p><strong>Características:</strong> Arquitectura escalable, seguridad robusta, UX optimizada para conversiones.</p>
+                        </div>
+                        <div class="project-tech">
+                            <h4>Tecnologías Utilizadas</h4>
+                            <div class="tech-tags">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">MongoDB</span>
+                                <span class="tech-tag">Stripe</span>
+                                <span class="tech-tag">JWT</span>
+                                <span class="tech-tag">Redux</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="habilidades" class="section">
+        <div class="container">
+            <h2 class="reveal-title">Mis Habilidades</h2>
+            <div class="skills">
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>HTML5</span>
+                        <span>95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="95"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>CSS3 & SASS</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>JavaScript</span>
+                        <span>88%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="88"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>React</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Node.js</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>MySQL & MongoDB</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="75"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacto">
+        <div class="container">
+            <h3>¡Conectemos!</h3>
+            <p>¿Interesado en trabajar juntos? ¡Me encantaría saber de ti!</p>
+            <div class="social-links">
+                <a href="mailto:alejoforni85@gmail.com" class="social-btn">
+                    <span>📧</span> Email
+                </a>
+                <a href="https://github.com/alejoforni" target="_blank" class="social-btn">
+                    <span>🐙</span> GitHub
+                </a>
+                <a href="https://linkedin.com/in/alejoforni" target="_blank" class="social-btn">
+                    <span>💼</span> LinkedIn
+                </a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.7;">© 2025 Alejo Forni. Hosteado con Firebase 🔥</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script src="./js/main.js"></script>
+</body>
+</html>
