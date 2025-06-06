@@ -7,7 +7,7 @@ let animationId = null;
 let clickScale = 1;
 let isInitialized = false;
 
-// FECHA DE NACIMIENTO (ajusta esta fecha con tu fecha de nacimiento exacta)
+// FECHA DE NACIMIENTO - 27 de Mayo 2004 a las 18:00
 const birthDate = new Date('2004-05-27T18:00:00');
 
 // SISTEMA DE CURSOR PERSONALIZADO CON VALIDACIONES
@@ -160,15 +160,73 @@ function updateCursor() {
   }
 }
 
-// CONTADOR DE EDAD SEGURO
+// CONTADOR DE EDAD SEGURO Y PRECISO
 function updateAgeCounter() {
   try {
     const ageElement = document.getElementById('ageCounter');
     if (ageElement) {
       const now = new Date();
-      const ageInMilliseconds = now - birthDate;
-      const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25);
+      
+      // Cálculo más preciso de la edad
+      let years = now.getFullYear() - birthDate.getFullYear();
+      let months = now.getMonth() - birthDate.getMonth();
+      let days = now.getDate() - birthDate.getDate();
+      let hours = now.getHours() - birthDate.getHours();
+      let minutes = now.getMinutes() - birthDate.getMinutes();
+      let seconds = now.getSeconds() - birthDate.getSeconds();
+      let milliseconds = now.getMilliseconds() - birthDate.getMilliseconds();
+      
+      // Ajustar si los valores son negativos
+      if (milliseconds < 0) {
+        seconds--;
+        milliseconds += 1000;
+      }
+      if (seconds < 0) {
+        minutes--;
+        seconds += 60;
+      }
+      if (minutes < 0) {
+        hours--;
+        minutes += 60;
+      }
+      if (hours < 0) {
+        days--;
+        hours += 24;
+      }
+      if (days < 0) {
+        months--;
+        const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += lastMonth.getDate();
+      }
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+      
+      // Convertir todo a años decimales
+      const totalDaysInYear = 365.25;
+      const totalHoursInYear = totalDaysInYear * 24;
+      const totalMinutesInYear = totalHoursInYear * 60;
+      const totalSecondsInYear = totalMinutesInYear * 60;
+      const totalMillisecondsInYear = totalSecondsInYear * 1000;
+      
+      const ageInYears = years + 
+        (months / 12) + 
+        (days / totalDaysInYear) + 
+        (hours / totalHoursInYear) + 
+        (minutes / totalMinutesInYear) + 
+        (seconds / totalSecondsInYear) + 
+        (milliseconds / totalMillisecondsInYear);
+      
       ageElement.textContent = ageInYears.toFixed(9);
+      
+      // Debug: mostrar información en consola solo una vez por minuto
+      if (seconds === 0 && milliseconds < 100) {
+        console.log('🎂 Información de edad:');
+        console.log('Fecha actual:', now.toISOString());
+        console.log('Fecha nacimiento:', birthDate.toISOString());
+        console.log('Edad calculada:', ageInYears.toFixed(9), 'años');
+      }
     }
   } catch (error) {
     console.error('❌ Error actualizando contador de edad:', error);
