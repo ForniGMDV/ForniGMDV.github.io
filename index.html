@@ -4,57 +4,659 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Portfolio - Alejo Forni</title>
-    
-    <!-- PRELOAD DE RECURSOS CRÍTICOS -->
-    <link rel="preload" href="/css/styles.css" as="style">
-    <link rel="preload" href="/js/main.js" as="script">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        /* COLORES PRINCIPALES ACTUALIZADOS - FONDO NEGRO OSCURO */
+        :root {
+            --primary-pink: #ff69b4;
+            --primary-pink-dark: #ff1493;
+            --primary-pink-darker: #c71585;
+            
+            /* NUEVOS FONDOS NEGROS OSCUROS */
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #0d0d0d;
+            --bg-tertiary: #111111;
+            --bg-dark: #050505;
+            
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #0a0a0a 0%, #0d0d0d 50%, #050505 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* SISTEMA DE CURSOR PERSONALIZADO ACTUALIZADO */
+        body.custom-cursor,
+        body.custom-cursor *,
+        body.custom-cursor *:before,
+        body.custom-cursor *:after {
+            cursor: none !important;
+        }
+
+        /* CURSOR PERSONALIZADO ROSA */
+        .cursor {
+            position: fixed;
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, #ff69b4 0%, #ff1493 70%, #c71585 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            box-shadow: 
+                0 0 20px rgba(255, 105, 180, 0.8),
+                0 0 40px rgba(255, 105, 180, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+        }
+
+        body.custom-cursor .cursor {
+            opacity: 1;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 105, 180, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: none;
+            opacity: 0;
+        }
+
+        body.custom-cursor .cursor-trail {
+            opacity: 1;
+        }
+
+        /* BOTÓN TOGGLE CURSOR */
+        .cursor-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(17, 17, 17, 0.8);
+            border: 2px solid #ff69b4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #ff69b4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            backdrop-filter: blur(10px);
+        }
+
+        .cursor-toggle:hover {
+            background: rgba(17, 17, 17, 0.9);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+
+        /* PARALLAX BACKGROUND */
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1.5" fill="%23ff69b4" opacity="0.3"/><circle cx="80" cy="40" r="1" fill="%23da70d6" opacity="0.4"/><circle cx="40" cy="80" r="1.2" fill="%23ff69b4" opacity="0.2"/><circle cx="60" cy="10" r="0.8" fill="%23ba55d3" opacity="0.5"/><circle cx="10" cy="60" r="1.8" fill="%23ff69b4" opacity="0.2"/></svg>');
+            background-size: 150px 150px;
+            z-index: -1;
+            will-change: transform;
+        }
+
+        /* SECCIÓN PRINCIPAL CENTRALIZADA */
+        .main-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-primary);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a0a 0%, #0d0d0d 30%, #050505 100%);
+        }
+
+        .main-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 105, 180, 0.08) 0%, transparent 50%);
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        .hero-content {
+            z-index: 10;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+            background: linear-gradient(45deg, #ff69b4, #da70d6, #ba55d3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .age-counter {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ff69b4;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+            font-family: 'Courier New', monospace;
+        }
+
+        .typewriter {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            height: 60px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .typewriter-text {
+            color: var(--text-primary);
+        }
+
+        .typewriter-cursor {
+            color: #ff69b4;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+            font-weight: bold;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* BOTONES DE NAVEGACIÓN PRINCIPAL */
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 2rem;
+        }
+
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            background: rgba(17, 17, 17, 0.7);
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            border-radius: 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-5px);
+            border-color: #ff69b4;
+            background: rgba(17, 17, 17, 0.9);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+        }
+
+        .nav-btn .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff69b4, #da70d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-btn .title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #ff69b4;
+        }
+
+        .nav-btn .description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-align: center;
+        }
+
+        /* MODALES */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #0d0d0d 0%, #111111 100%);
+            margin: 2rem;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 95%;
+            max-width: 1200px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #ff69b4;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            z-index: 10001;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ff1493;
+            transform: scale(1.1);
+        }
+
+        .modal h2 {
+            color: #ff69b4;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(45deg, #ff69b4, #da70d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ESTILOS ESPECÍFICOS PARA CADA MODAL */
+        
+        /* PROYECTOS MODAL */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #ff69b4, #da70d6);
+            border-radius: 15px;
+            color: white;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
+        }
+
+        .stat-item:hover {
+            transform: scale(1.03);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: rgba(17, 17, 17, 0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.2);
+            border-color: rgba(255, 105, 180, 0.5);
+            background: rgba(17, 17, 17, 0.9);
+        }
+
+        .project-card h3 {
+            color: #ff69b4;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-card p {
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: linear-gradient(45deg, #ff69b4, #da70d6);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* HABILIDADES MODAL */
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-item {
+            background: rgba(17, 17, 17, 0.7);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 105, 180, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ff69b4, #da70d6);
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s ease;
+            position: relative;
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* CONTACTO MODAL */
+        .contact-content {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .contact-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: #e0e0e0;
+        }
+
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 2rem;
+            background: linear-gradient(45deg, #ff69b4, #da70d6);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
+        }
+
+        .social-btn .icon {
+            font-size: 2rem;
+        }
+
+        /* FLOATING ELEMENTS */
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 105, 180, 0.1);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        .shape:nth-child(1) {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 40px;
+            height: 40px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translateY(-15px) rotate(180deg); 
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .age-counter {
+                font-size: 1.2rem;
+            }
+            
+            .typewriter {
+                font-size: 1rem;
+            }
+
+            .nav-buttons {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .nav-btn {
+                padding: 1.5rem 1rem;
+            }
+
+            .nav-btn .icon {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                margin: 1rem;
+                padding: 1.5rem;
+                max-height: 95vh;
+            }
+
+            .projects,
+            .skills,
+            .stats,
+            .social-links {
+                grid-template-columns: 1fr;
+            }
+
+            .cursor,
+            .cursor-trail {
+                display: none;
+            }
+
+            .cursor-toggle {
+                display: none;
+            }
+
+            body.custom-cursor,
+            body.custom-cursor *,
+            body.custom-cursor *:before,
+            body.custom-cursor *:after {
+                cursor: auto !important;
+            }
+        }
+    </style>
 </head>
 <body class="custom-cursor">
-    <!-- LOADING SCREEN -->
-    <div class="loading-screen" id="loadingScreen">
-        <div>
-            <div class="loader"></div>
-            <div class="loading-text">Cargando experiencia...</div>
-        </div>
-    </div>
+    <!-- PARALLAX BACKGROUND -->
+    <div class="parallax-bg" id="parallaxBg"></div>
 
     <!-- BOTÓN TOGGLE CURSOR -->
     <div class="cursor-toggle" id="cursorToggle" title="Alternar cursor personalizado">
         🖱️
     </div>
 
-    <!-- PARALLAX BACKGROUND -->
-    <div class="parallax-bg" id="parallaxBg"></div>
-
-    <!-- SCROLL INDICATOR -->
-    <div class="scroll-indicator" id="scrollIndicator"></div>
-
-    <header id="header">
-        <nav class="container">
-            <div class="logo">Alejo Forni</div>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#proyectos">Proyectos</a></li>
-                <li><a href="#habilidades">Habilidades</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section id="inicio" class="hero">
+    <!-- SECCIÓN PRINCIPAL -->
+    <section class="main-section">
         <div class="floating-shapes">
             <div class="shape"></div>
             <div class="shape"></div>
             <div class="shape"></div>
         </div>
+        
         <div class="hero-content">
             <h1>Hola, soy Alejo Forni.</h1>
             <div class="age-counter">
@@ -64,13 +666,35 @@
                 <span class="typewriter-text" id="typewriterText"></span>
                 <span class="typewriter-cursor" id="typewriterCursor">|</span>
             </div>
-            <a href="#proyectos" class="btn" id="heroBtn">Ver mis proyectos</a>
+
+            <!-- BOTONES DE NAVEGACIÓN -->
+            <div class="nav-buttons">
+                <div class="nav-btn" onclick="openModal('proyectosModal')">
+                    <div class="icon">💼</div>
+                    <div class="title">Proyectos</div>
+                    <div class="description">Explora mis trabajos y desarrollos</div>
+                </div>
+                
+                <div class="nav-btn" onclick="openModal('habilidadesModal')">
+                    <div class="icon">⚡</div>
+                    <div class="title">Habilidades</div>
+                    <div class="description">Tecnologías y competencias</div>
+                </div>
+                
+                <div class="nav-btn" onclick="openModal('contactoModal')">
+                    <div class="icon">📧</div>
+                    <div class="title">Contacto</div>
+                    <div class="description">¡Conectemos y trabajemos juntos!</div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="proyectos" class="section">
-        <div class="container">
-            <h2 class="reveal-title">Mis Proyectos</h2>
+    <!-- MODAL PROYECTOS -->
+    <div id="proyectosModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('proyectosModal')">&times;</span>
+            <h2>Mis Proyectos</h2>
             
             <!-- CONTADOR DE ESTADÍSTICAS -->
             <div class="stats">
@@ -93,125 +717,64 @@
             </div>
 
             <div class="projects">
-                <div class="project-card fade-in-up" data-project="vismalaga">
+                <div class="project-card">
                     <h3>VisMálaga</h3>
                     <p>Aplicación web para descubrir actividades y lugares turísticos en Málaga. Desarrollada con React, Node.js y MySQL.</p>
-                    <p><strong>Tecnologías:</strong> React, Node.js, MySQL, Firebase</p>
-                    <button class="btn project-btn">Ver detalles</button>
+                    <p><strong>Características:</strong></p>
+                    <p>🗺️ Mapa interactivo con lugares de interés<br>
+                    📱 Diseño responsive y PWA<br>
+                    🔍 Sistema de búsqueda avanzado<br>
+                    ⭐ Sistema de reseñas y valoraciones</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">Firebase</span>
+                        <span class="tech-tag">Google Maps API</span>
+                    </div>
                 </div>
                 
-                <div class="project-card fade-in-up" data-project="portfolio">
+                <div class="project-card">
                     <h3>Portfolio Personal</h3>
                     <p>Sitio web personal responsivo con diseño moderno y animaciones suaves. Hosteado en Firebase.</p>
-                    <p><strong>Tecnologías:</strong> HTML5, CSS3, JavaScript, Firebase Hosting</p>
-                    <button class="btn project-btn">Ver detalles</button>
+                    <p><strong>Características:</strong></p>
+                    <p>🎨 Diseño moderno y minimalista<br>
+                    ⚡ Carga ultra-rápida<br>
+                    📱 Completamente responsive<br>
+                    🌟 Animaciones suaves</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Firebase</span>
+                    </div>
                 </div>
                 
-                <div class="project-card fade-in-up" data-project="ecommerce">
+                <div class="project-card">
                     <h3>E-Commerce Platform</h3>
                     <p>Plataforma de comercio electrónico completa con sistema de pagos, gestión de inventario y panel de administración.</p>
-                    <p><strong>Tecnologías:</strong> React, Node.js, MongoDB, Stripe</p>
-                    <button class="btn project-btn">Ver detalles</button>
-                </div>
-            </div>
-
-            <!-- SECCIONES DE DETALLES DE PROYECTOS -->
-            <div class="project-details" id="details-vismalaga">
-                <div class="project-details-content">
-                    <button class="close-details">&times;</button>
-                    <h3>VisMálaga - Detalles del Proyecto</h3>
-                    <div class="project-info">
-                        <div class="project-description">
-                            <p>Una aplicación web completa para explorar Málaga, con funcionalidades como:</p>
-                            <ul>
-                                <li>🗺️ Mapa interactivo con lugares de interés</li>
-                                <li>📱 Diseño responsive y PWA</li>
-                                <li>🔍 Sistema de búsqueda avanzado</li>
-                                <li>⭐ Sistema de reseñas y valoraciones</li>
-                                <li>🌐 Multiidioma (ES/EN)</li>
-                            </ul>
-                            <p><strong>Retos superados:</strong> Optimización de rendimiento, integración con APIs de mapas, gestión de estado complejo.</p>
-                        </div>
-                        <div class="project-tech">
-                            <h4>Tecnologías Utilizadas</h4>
-                            <div class="tech-tags">
-                                <span class="tech-tag">React</span>
-                                <span class="tech-tag">Node.js</span>
-                                <span class="tech-tag">MySQL</span>
-                                <span class="tech-tag">Firebase</span>
-                                <span class="tech-tag">Google Maps API</span>
-                                <span class="tech-tag">PWA</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-details" id="details-portfolio">
-                <div class="project-details-content">
-                    <button class="close-details">&times;</button>
-                    <h3>Portfolio Personal - Detalles</h3>
-                    <div class="project-info">
-                        <div class="project-description">
-                            <p>Mi portfolio personal con enfoque en la experiencia del usuario:</p>
-                            <ul>
-                                <li>🎨 Diseño moderno y minimalista</li>
-                                <li>⚡ Carga ultra-rápida</li>
-                                <li>📱 Completamente responsive</li>
-                                <li>🌟 Animaciones suaves</li>
-                                <li>🔥 Hosteado en Firebase</li>
-                            </ul>
-                        </div>
-                        <div class="project-tech">
-                            <h4>Tecnologías Utilizadas</h4>
-                            <div class="tech-tags">
-                                <span class="tech-tag">HTML5</span>
-                                <span class="tech-tag">CSS3</span>
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">Firebase</span>
-                                <span class="tech-tag">Performance Optimization</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-details" id="details-ecommerce">
-                <div class="project-details-content">
-                    <button class="close-details">&times;</button>
-                    <h3>E-Commerce Platform - Detalles</h3>
-                    <div class="project-info">
-                        <div class="project-description">
-                            <p>Plataforma completa de comercio electrónico:</p>
-                            <ul>
-                                <li>🛒 Carrito de compras avanzado</li>
-                                <li>💳 Integración con Stripe</li>
-                                <li>📊 Panel de administración</li>
-                                <li>📦 Gestión de inventario</li>
-                                <li>📈 Analytics y reportes</li>
-                            </ul>
-                            <p><strong>Características:</strong> Arquitectura escalable, seguridad robusta, UX optimizada para conversiones.</p>
-                        </div>
-                        <div class="project-tech">
-                            <h4>Tecnologías Utilizadas</h4>
-                            <div class="tech-tags">
-                                <span class="tech-tag">React</span>
-                                <span class="tech-tag">Node.js</span>
-                                <span class="tech-tag">MongoDB</span>
-                                <span class="tech-tag">Stripe</span>
-                                <span class="tech-tag">JWT</span>
-                                <span class="tech-tag">Redux</span>
-                            </div>
-                        </div>
+                    <p><strong>Características:</strong></p>
+                    <p>🛒 Carrito de compras avanzado<br>
+                    💳 Integración con Stripe<br>
+                    📊 Panel de administración<br>
+                    📦 Gestión de inventario</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">Stripe</span>
+                        <span class="tech-tag">Redux</span>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="habilidades" class="section">
-        <div class="container">
-            <h2 class="reveal-title">Mis Habilidades</h2>
+    <!-- MODAL HABILIDADES -->
+    <div id="habilidadesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('habilidadesModal')">&times;</span>
+            <h2>Mis Habilidades</h2>
             <div class="skills">
                 <div class="skill-item">
                     <div class="skill-name">
@@ -269,28 +832,645 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <footer id="contacto">
-        <div class="container">
-            <h3>¡Conectemos!</h3>
-            <p>¿Interesado en trabajar juntos? ¡Me encantaría saber de ti!</p>
-            <div class="social-links">
-                <a href="mailto:alejoforni85@gmail.com" class="social-btn">
-                    <span>📧</span> Email
-                </a>
-                <a href="https://github.com/alejoforni" target="_blank" class="social-btn">
-                    <span>🐙</span> GitHub
-                </a>
-                <a href="https://linkedin.com/in/alejoforni" target="_blank" class="social-btn">
-                    <span>💼</span> LinkedIn
-                </a>
+    <!-- MODAL CONTACTO -->
+    <div id="contactoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('contactoModal')">&times;</span>
+            <h2>¡Conectemos!</h2>
+            <div class="contact-content">
+                <p class="contact-description">¿Interesado en trabajar juntos? ¡Me encantaría saber de ti!</p>
+                <div class="social-links">
+                    <a href="mailto:alejoforni85@gmail.com" class="social-btn">
+                        <span class="icon">📧</span>
+                        <span>alejoforni85@gmail.com</span>
+                    </a>
+                    <a href="https://github.com/alejoforni" target="_blank" class="social-btn">
+                        <span class="icon">🐙</span>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://linkedin.com/in/alejoforni" target="_blank" class="social-btn">
+                        <span class="icon">💼</span>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+                <p style="margin-top: 2rem; opacity: 0.7;">© 2025 Alejo Forni. Hosteado con Firebase 🔥</p>
             </div>
-            <p style="margin-top: 2rem; opacity: 0.7;">© 2025 Alejo Forni. Hosteado con Firebase 🔥</p>
         </div>
-    </footer>
+    </div>
 
-    <!-- JAVASCRIPT -->
-    <script src="./js/main.js"></script>
+    <script>
+        // VARIABLES GLOBALES OPTIMIZADAS
+        const body = document.body;
+        let mouseX = 0, mouseY = 0;
+        let cursorTrails = [];
+        let isCustomCursor = true;
+        let animationId = null;
+        let clickScale = 1;
+        let isInitialized = false;
+
+        // FECHA DE NACIMIENTO - 27 de Mayo 2004 a las 18:00
+        const birthDate = new Date('2004-05-27T18:00:00');
+
+        // SISTEMA DE CURSOR PERSONALIZADO CON VALIDACIONES
+        function initCursor() {
+            try {
+                // Limpiar cursores existentes
+                document.querySelectorAll('.cursor, .cursor-trail').forEach(el => {
+                    if (el.parentNode) {
+                        el.parentNode.removeChild(el);
+                    }
+                });
+                cursorTrails = [];
+
+                // Verificar si estamos en móvil
+                if (window.innerWidth <= 768) {
+                    console.log('Móvil detectado - cursor personalizado deshabilitado');
+                    return;
+                }
+
+                // Crear elementos del trail
+                for (let i = 0; i < 12; i++) {
+                    const trail = document.createElement("div");
+                    const isMainCursor = i === 0;
+                    
+                    if (isMainCursor) {
+                        // Cursor principal
+                        trail.className = "cursor";
+                        trail.style.cssText = `
+                            position: fixed;
+                            width: 16px;
+                            height: 16px;
+                            background: radial-gradient(circle, #ff69b4 0%, #ff1493 70%, #c71585 100%);
+                            border-radius: 50%;
+                            pointer-events: none;
+                            z-index: 9999;
+                            transform: translate(-50%, -50%);
+                            box-shadow: 
+                                0 0 20px rgba(255, 105, 180, 0.8),
+                                0 0 40px rgba(255, 105, 180, 0.4),
+                                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+                            border: 1px solid rgba(255, 255, 255, 0.2);
+                            opacity: ${isCustomCursor ? '1' : '0'};
+                            left: 50%;
+                            top: 50%;
+                        `;
+                    } else {
+                        // Elementos del trail
+                        trail.className = "cursor-trail";
+                        trail.style.cssText = `
+                            position: fixed;
+                            width: 8px;
+                            height: 8px;
+                            background: rgba(255, 105, 180, 0.6);
+                            border-radius: 50%;
+                            pointer-events: none;
+                            z-index: 9998;
+                            transform: translate(-50%, -50%);
+                            transition: none;
+                            opacity: ${isCustomCursor ? '1' : '0'};
+                            left: 50%;
+                            top: 50%;
+                        `;
+                    }
+                    
+                    document.body.appendChild(trail);
+                    cursorTrails.push({
+                        element: trail,
+                        x: window.innerWidth / 2,
+                        y: window.innerHeight / 2,
+                        targetX: window.innerWidth / 2,
+                        targetY: window.innerHeight / 2,
+                        isMain: isMainCursor
+                    });
+                }
+                
+                // Asegurar que el body tenga la clase custom-cursor
+                if (isCustomCursor) {
+                    body.classList.add('custom-cursor');
+                    // Iniciar animación
+                    if (!animationId) {
+                        updateCursor();
+                    }
+                }
+                
+                console.log('✅ Cursor personalizado inicializado correctamente');
+            } catch (error) {
+                console.error('❌ Error inicializando cursor:', error);
+                // Fallback: deshabilitar cursor personalizado
+                isCustomCursor = false;
+                body.classList.remove('custom-cursor');
+            }
+        }
+
+        // Movimiento del cursor MEJORADO Y SEGURO
+        function updateCursor() {
+            try {
+                if (!isCustomCursor || cursorTrails.length === 0) {
+                    animationId = null;
+                    return;
+                }
+
+                cursorTrails.forEach((trail, index) => {
+                    if (!trail.element || !trail.element.parentNode) {
+                        return; // Skip elementos que ya no existen
+                    }
+
+                    if (index === 0) {
+                        // El cursor principal sigue al mouse
+                        trail.targetX = mouseX;
+                        trail.targetY = mouseY;
+                        trail.x = mouseX;
+                        trail.y = mouseY;
+                    } else {
+                        // Los trails siguen al elemento anterior
+                        const prevTrail = cursorTrails[index - 1];
+                        if (prevTrail) {
+                            trail.targetX = prevTrail.x;
+                            trail.targetY = prevTrail.y;
+                            
+                            const ease = 0.15 - (index * 0.005);
+                            trail.x += (trail.targetX - trail.x) * ease;
+                            trail.y += (trail.targetY - trail.y) * ease;
+                        }
+                    }
+
+                    // Aplicar posición de forma segura
+                    if (trail.element && trail.element.style) {
+                        trail.element.style.left = trail.x + "px";
+                        trail.element.style.top = trail.y + "px";
+
+                        // Efectos solo para trails
+                        if (!trail.isMain) {
+                            const scale = Math.max(0.2, 1 - index * 0.08);
+                            const opacity = Math.max(0.05, 0.7 - index * 0.06);
+                            
+                            trail.element.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                            trail.element.style.opacity = opacity;
+                            
+                            const hue = 330 + (index * 3);
+                            const saturation = Math.max(50, 100 - index * 5);
+                            trail.element.style.background = `hsla(${hue}, ${saturation}%, 70%, ${opacity})`;
+                        }
+                    }
+                });
+
+                animationId = requestAnimationFrame(updateCursor);
+            } catch (error) {
+                console.error('❌ Error en updateCursor:', error);
+                animationId = null;
+            }
+        }
+
+        // CONTADOR DE EDAD SEGURO Y PRECISO
+        function updateAgeCounter() {
+            try {
+                const ageElement = document.getElementById('ageCounter');
+                if (ageElement) {
+                    const now = new Date();
+                    
+                    // Cálculo más preciso de la edad
+                    let years = now.getFullYear() - birthDate.getFullYear();
+                    let months = now.getMonth() - birthDate.getMonth();
+                    let days = now.getDate() - birthDate.getDate();
+                    let hours = now.getHours() - birthDate.getHours();
+                    let minutes = now.getMinutes() - birthDate.getMinutes();
+                    let seconds = now.getSeconds() - birthDate.getSeconds();
+                    let milliseconds = now.getMilliseconds() - birthDate.getMilliseconds();
+                    
+                    // Ajustar si los valores son negativos
+                    if (milliseconds < 0) {
+                        seconds--;
+                        milliseconds += 1000;
+                    }
+                    if (seconds < 0) {
+                        minutes--;
+                        seconds += 60;
+                    }
+                    if (minutes < 0) {
+                        hours--;
+                        minutes += 60;
+                    }
+                    if (hours < 0) {
+                        days--;
+                        hours += 24;
+                    }
+                    if (days < 0) {
+                        months--;
+                        const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                        days += lastMonth.getDate();
+                    }
+                    if (months < 0) {
+                        years--;
+                        months += 12;
+                    }
+                    
+                    // Convertir todo a años decimales
+                    const totalDaysInYear = 365.25;
+                    const totalHoursInYear = totalDaysInYear * 24;
+                    const totalMinutesInYear = totalHoursInYear * 60;
+                    const totalSecondsInYear = totalMinutesInYear * 60;
+                    const totalMillisecondsInYear = totalSecondsInYear * 1000;
+                    
+                    const ageInYears = years + 
+                        (months / 12) + 
+                        (days / totalDaysInYear) + 
+                        (hours / totalHoursInYear) + 
+                        (minutes / totalMinutesInYear) + 
+                        (seconds / totalSecondsInYear) + 
+                        (milliseconds / totalMillisecondsInYear);
+                    
+                    ageElement.textContent = ageInYears.toFixed(9);
+                }
+            } catch (error) {
+                console.error('❌ Error actualizando contador de edad:', error);
+            }
+        }
+
+        // TYPEWRITER EFFECT SEGURO
+        function initTypewriter() {
+            try {
+                const typewriterText = document.getElementById("typewriterText");
+                const typewriterCursor = document.getElementById("typewriterCursor");
+                
+                if (!typewriterText || !typewriterCursor) {
+                    console.warn('⚠️ Elementos typewriter no encontrados');
+                    return;
+                }
+                
+                const texts = [
+                    "Desarrollador Full Stack especializado en experiencias digitales únicas",
+                    "Experto en React, Node.js y tecnologías modernas",
+                    "Creando el futuro con código limpio y eficiente",
+                    "Transformando ideas en realidades digitales",
+                ];
+                
+                let textIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+
+                function typeWriter() {
+                    try {
+                        if (!typewriterText) return;
+                        
+                        const currentText = texts[textIndex];
+
+                        if (isDeleting) {
+                            typewriterText.textContent = currentText.substring(0, charIndex - 1);
+                            charIndex--;
+                        } else {
+                            typewriterText.textContent = currentText.substring(0, charIndex + 1);
+                            charIndex++;
+                        }
+
+                        let typeSpeed = isDeleting ? 30 : 60;
+
+                        if (!isDeleting && charIndex === currentText.length) {
+                            typeSpeed = 1500;
+                            isDeleting = true;
+                        } else if (isDeleting && charIndex === 0) {
+                            isDeleting = false;
+                            textIndex = (textIndex + 1) % texts.length;
+                            typeSpeed = 300;
+                        }
+
+                        setTimeout(typeWriter, typeSpeed);
+                    } catch (error) {
+                        console.error('❌ Error en typewriter:', error);
+                    }
+                }
+
+                typeWriter();
+                console.log('✅ Typewriter inicializado correctamente');
+            } catch (error) {
+                console.error('❌ Error inicializando typewriter:', error);
+            }
+        }
+
+        // CONTADOR DE ESTADÍSTICAS SEGURO
+        function initStatsCounter() {
+            try {
+                function animateCounters() {
+                    try {
+                        const counters = document.querySelectorAll(".stat-number");
+                        counters.forEach((counter) => {
+                            const target = parseInt(counter.getAttribute("data-target"));
+                            if (isNaN(target)) return;
+                            
+                            const duration = 2000;
+                            const increment = target / (duration / 16);
+                            let current = 0;
+
+                            const updateCounter = () => {
+                                try {
+                                    if (current < target && counter.textContent !== undefined) {
+                                        current += increment;
+                                        counter.textContent = Math.ceil(current);
+                                        requestAnimationFrame(updateCounter);
+                                    } else if (counter.textContent !== undefined) {
+                                        counter.textContent = target;
+                                    }
+                                } catch (error) {
+                                    console.error('❌ Error actualizando contador:', error);
+                                }
+                            };
+
+                            requestAnimationFrame(updateCounter);
+                        });
+                    } catch (error) {
+                        console.error('❌ Error en animateCounters:', error);
+                    }
+                }
+
+                // Animar inmediatamente cuando se abra el modal de proyectos
+                window.animateStatsCounters = animateCounters;
+            } catch (error) {
+                console.error('❌ Error inicializando stats counter:', error);
+            }
+        }
+
+        // ANIMACIÓN DE BARRAS DE HABILIDADES
+        function animateSkillBars() {
+            try {
+                const progressBars = document.querySelectorAll(".skill-progress");
+                progressBars.forEach((bar) => {
+                    const width = bar.getAttribute("data-width");
+                    setTimeout(() => {
+                        if (bar.style) {
+                            bar.style.width = width + "%";
+                        }
+                    }, 150);
+                });
+            } catch (error) {
+                console.error('❌ Error animando barras de habilidades:', error);
+            }
+        }
+
+        // FUNCIONES DE MODAL
+        function openModal(modalId) {
+            try {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Activar animaciones específicas según el modal
+                    if (modalId === 'proyectosModal' && window.animateStatsCounters) {
+                        setTimeout(() => {
+                            window.animateStatsCounters();
+                        }, 300);
+                    } else if (modalId === 'habilidadesModal') {
+                        setTimeout(() => {
+                            animateSkillBars();
+                        }, 300);
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error abriendo modal:', error);
+            }
+        }
+
+        function closeModal(modalId) {
+            try {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            } catch (error) {
+                console.error('❌ Error cerrando modal:', error);
+            }
+        }
+
+        // DETECCIÓN MÓVIL MEJORADA
+        function handleMobileDetection() {
+            try {
+                if (window.innerWidth <= 768) {
+                    isCustomCursor = false;
+                    body.classList.remove("custom-cursor");
+                    
+                    cursorTrails.forEach(trail => {
+                        if (trail.element && trail.element.style) {
+                            trail.element.style.display = "none";
+                        }
+                    });
+                    
+                    const cursorToggle = document.getElementById("cursorToggle");
+                    if (cursorToggle) {
+                        cursorToggle.style.display = "none";
+                    }
+                    
+                    if (animationId) {
+                        cancelAnimationFrame(animationId);
+                        animationId = null;
+                    }
+                    
+                    console.log('📱 Modo móvil activado');
+                }
+            } catch (error) {
+                console.error('❌ Error en detección móvil:', error);
+            }
+        }
+
+        // EVENT LISTENERS SEGUROS
+        function initEventListeners() {
+            try {
+                console.log('🔧 Inicializando event listeners...');
+
+                // Mouse events
+                document.addEventListener("mousemove", (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    if (isCustomCursor && !animationId) {
+                        updateCursor();
+                    }
+                });
+
+                document.addEventListener("mousedown", () => {
+                    if (isCustomCursor && cursorTrails.length > 0 && cursorTrails[0].element) {
+                        clickScale = 1.4;
+                        const mainCursor = cursorTrails[0].element;
+                        mainCursor.style.transform = 'translate(-50%, -50%) scale(1.4)';
+                        mainCursor.style.background = 'radial-gradient(circle, #ff1493 0%, #c71585 70%, #8b008b 100%)';
+                    }
+                });
+
+                document.addEventListener("mouseup", () => {
+                    if (isCustomCursor && cursorTrails.length > 0 && cursorTrails[0].element) {
+                        clickScale = 1;
+                        const mainCursor = cursorTrails[0].element;
+                        mainCursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                        mainCursor.style.background = 'radial-gradient(circle, #ff69b4 0%, #ff1493 70%, #c71585 100%)';
+                    }
+                });
+
+                // Cursor toggle
+                const cursorToggle = document.getElementById("cursorToggle");
+                if (cursorToggle) {
+                    cursorToggle.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        isCustomCursor = !isCustomCursor;
+                        if (isCustomCursor) {
+                            body.classList.add("custom-cursor");
+                            cursorToggle.textContent = "🖱️";
+                            cursorToggle.title = "Cambiar a cursor normal";
+                            cursorTrails.forEach(trail => {
+                                if (trail.element) trail.element.style.opacity = "1";
+                            });
+                            if (!animationId) updateCursor();
+                        } else {
+                            body.classList.remove("custom-cursor");
+                            cursorToggle.textContent = "✨";
+                            cursorToggle.title = "Cambiar a cursor personalizado";
+                            cursorTrails.forEach(trail => {
+                                if (trail.element) trail.element.style.opacity = "0";
+                            });
+                            if (animationId) {
+                                cancelAnimationFrame(animationId);
+                                animationId = null;
+                            }
+                        }
+                    });
+                }
+
+                // Cerrar modales al hacer clic fuera
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal')) {
+                        const modals = document.querySelectorAll('.modal.show');
+                        modals.forEach(modal => {
+                            modal.classList.remove('show');
+                            document.body.style.overflow = 'auto';
+                        });
+                    }
+                });
+
+                // Cerrar modales con Escape
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        const modals = document.querySelectorAll('.modal.show');
+                        modals.forEach(modal => {
+                            modal.classList.remove('show');
+                            document.body.style.overflow = 'auto';
+                        });
+                    }
+                });
+
+                // Hover effects para elementos interactivos
+                setTimeout(() => {
+                    const interactiveElements = document.querySelectorAll(
+                        ".nav-btn, .social-btn, .cursor-toggle, .close"
+                    );
+
+                    interactiveElements.forEach((element) => {
+                        element.addEventListener("mouseenter", () => {
+                            if (isCustomCursor && cursorTrails.length > 0 && cursorTrails[0].element) {
+                                const mainCursor = cursorTrails[0].element;
+                                mainCursor.style.transform = `translate(-50%, -50%) scale(1.3)`;
+                                mainCursor.style.boxShadow = `0 0 30px rgba(255, 105, 180, 1), 0 0 60px rgba(255, 105, 180, 0.6)`;
+                            }
+                        });
+
+                        element.addEventListener("mouseleave", () => {
+                            if (isCustomCursor && cursorTrails.length > 0 && cursorTrails[0].element) {
+                                const mainCursor = cursorTrails[0].element;
+                                mainCursor.style.transform = `translate(-50%, -50%) scale(${clickScale})`;
+                                mainCursor.style.boxShadow = `0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 105, 180, 0.4)`;
+                            }
+                        }); 
+                    });
+                }, 1000);
+
+                console.log('✅ Event listeners inicializados correctamente');
+            } catch (error) {
+                console.error('❌ Error inicializando event listeners:', error);
+            }
+        }
+
+        // Debounce utility
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // INICIALIZACIÓN PRINCIPAL SEGURA
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                console.log('🚀 DOM Cargado - Iniciando portfolio...');
+                handleMobileDetection();
+                isInitialized = true;
+            } catch (error) {
+                console.error('❌ Error en DOMContentLoaded:', error);
+            }
+        });
+
+        // INICIALIZACIÓN FINAL DESPUÉS DE LOAD
+        window.addEventListener("load", () => {
+            try {
+                console.log('🔄 Iniciando carga final...');
+                
+                // Función para completar la inicialización
+                const completeInitialization = () => {
+                    try {
+                        console.log('⚡ Ejecutando inicialización completa...');
+                        
+                        // Inicializar todos los componentes en orden
+                        initTypewriter();
+                        initCursor();
+                        initEventListeners();
+                        initStatsCounter();
+                        
+                        // Iniciar contador de edad
+                        updateAgeCounter();
+                        setInterval(updateAgeCounter, 50);
+                        
+                        console.log('✅ Portfolio completamente inicializado');
+                    } catch (error) {
+                        console.error('❌ Error en inicialización completa:', error);
+                    }
+                };
+                
+                // Inicializar directamente
+                completeInitialization();
+                
+            } catch (error) {
+                console.error('❌ Error crítico en window.load:', error);
+            }
+        });
+
+        // CLEANUP SEGURO
+        window.addEventListener("beforeunload", () => {
+            try {
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                }
+                cursorTrails.forEach(trail => {
+                    if (trail.element && trail.element.parentNode) {
+                        trail.element.parentNode.removeChild(trail.element);
+                    }
+                });
+            } catch (error) {
+                console.error('❌ Error en cleanup:', error);
+            }
+        });
+
+        // RESIZE HANDLER
+        window.addEventListener('resize', debounce(() => {
+            try {
+                handleMobileDetection();
+            } catch (error) {
+                console.error('❌ Error en resize:', error);
+            }
+        }, 250));
+    </script>
 </body>
 </html>
