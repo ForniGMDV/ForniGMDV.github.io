@@ -391,7 +391,7 @@ function initStatsCounter() {
   }
 }
 
-// SISTEMA DE DETALLES DE PROYECTOS SEGURO
+// SISTEMA DE DETALLES DE PROYECTOS SEGURO - SIN SCROLL AUTOMÁTICO
 function showProjectDetails(projectId) {
   try {
     document.querySelectorAll('.project-details').forEach(detail => {
@@ -401,12 +401,8 @@ function showProjectDetails(projectId) {
     const detailElement = document.getElementById(`details-${projectId}`);
     if (detailElement) {
       detailElement.classList.add('active');
-      setTimeout(() => {
-        detailElement.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }, 300);
+      // ELIMINADO: scrollIntoView para que no se mueva la cámara
+      // La sección simplemente se expande donde está
     }
   } catch (error) {
     console.error('❌ Error mostrando detalles del proyecto:', error);
@@ -523,7 +519,7 @@ function initEventListeners() {
       });
     }
 
-    // Smooth scrolling
+    // Smooth scrolling para navegación
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();
@@ -537,19 +533,15 @@ function initEventListeners() {
       });
     });
 
-    // Hero button
+    // Hero button - MODIFICADO para eliminar scroll automático
     const heroBtn = document.getElementById("heroBtn");
     if (heroBtn) {
       heroBtn.addEventListener("click", function (e) {
         e.preventDefault();
         this.style.transform = "scale(0.95)";
         setTimeout(() => { this.style.transform = ""; }, 150);
-        setTimeout(() => {
-          const projectsSection = document.querySelector("#proyectos");
-          if (projectsSection) {
-            projectsSection.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 200);
+        // ELIMINADO: scroll automático a proyectos
+        // El botón solo tiene efecto visual ahora
       });
     }
 
