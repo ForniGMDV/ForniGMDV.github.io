@@ -8,7 +8,7 @@ let clickScale = 1;
 let isInitialized = false;
 
 // FECHA DE NACIMIENTO (ajusta esta fecha con tu fecha de nacimiento exacta)
-const birthDate = new Date('2002-06-15T10:30:00');
+const birthDate = new Date('2004-05-27T18:00:00');
 
 // SISTEMA DE CURSOR PERSONALIZADO CON VALIDACIONES
 function initCursor() {
